@@ -13,6 +13,7 @@ import (
 // which is a slice of strings.
 type deck []string
 
+// Create new deck which contain 16 cards.
 func newDeck() deck {
 	cards := deck{}
 
@@ -28,24 +29,31 @@ func newDeck() deck {
 	return cards
 }
 
+// Print all cards in deck
+// each on newline with index and value.
 func (d deck) print() {
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
 }
 
+// Make a "hand" of cards
+// from existing deck.
 func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
+// Convert deck to string representation.
 func (d deck) toString() string {
 	return strings.Join([]string(d), ",")
 }
 
+// Save existing deck to specified file.
 func (d deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
 
+// Create a deck from specified file.
 func newDeckFromFile(filename string) deck {
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -57,6 +65,7 @@ func newDeckFromFile(filename string) deck {
 	return deck(s)
 }
 
+// Shuffle existing deck.
 func (d deck) shuffle() {
 	rand.Seed(time.Now().UnixNano())
 
